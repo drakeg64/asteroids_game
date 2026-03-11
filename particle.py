@@ -14,6 +14,7 @@ class Particle(pygame.sprite.Sprite):
         self.radius -= 0.1
         if self.radius <= 0:
             self.kill()
+        
     
     def draw(self, screen):
         pygame.draw.circle(screen, "orange", self.position, self.radius, LINE_WIDTH)

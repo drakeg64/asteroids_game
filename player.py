@@ -42,7 +42,8 @@ class Player(CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot(dt)
-    
+        self.wrap()
+
     def rotate(self, dt):
         self.rotation += (PLAYER_TURN_SPEED * dt)
 
