@@ -27,9 +27,11 @@ def main():
 
     
     player_1 = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    
+    pygame.font.init()
+    font = pygame.font.Font(None, 36)
+    score = 0
     dt = 0
-
+    
     while True:
         log_state()
         
@@ -42,22 +44,29 @@ def main():
 
         for asteroid in asteroids:
             if asteroid.collides_with(player_1):
-                log_event("player_hit")
-                print("Game over!")
-                sys.exit()
+                if player_1.invulnerable_timer <= 0:
+                    log_event("player_hit")
+                    if player_1.lives < 1:
+                        print("Game over!")
+                        sys.exit()
+                    else: 
+                        player_1.lives -= 1
+                        player_1.respawn()
         
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.collides_with(shot):
                     log_event("asteroid_shot")
+                    score += 100
                     asteroid.split()
                     shot.kill()
         
         screen.fill("black")
-        
         for object in drawable:
             object.draw(screen)
         
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_text, (10,10))
         pygame.display.flip()
         
         # limit the framerate to 60fps
