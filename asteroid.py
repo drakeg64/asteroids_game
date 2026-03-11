@@ -4,14 +4,26 @@ from constants import *
 from circleshape import CircleShape
 import pygame
 from particle import Particle
+import math
 
 
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
-
+        self.points = []
+        num_points = 8
+        for i in range(num_points):
+            angle = (i / num_points) * (2 * math.pi)
+            dist = self.radius * random.uniform(0.7, 1.2)
+            self.points.append(pygame.Vector2(
+                math.cos(angle) * dist,
+                math.sin(angle) * dist
+            ))
     def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.position, self.radius, LINE_WIDTH)
+        actual_points = []
+        for p in self.points:
+            actual_points.append(self.position + p)
+        pygame.draw.polygon(screen, "white", actual_points, LINE_WIDTH)
 
     def update(self, dt):
         self.position += self.velocity * dt   
