@@ -1,6 +1,8 @@
+from multiprocessing.util import info
+
 import pygame
 import sys
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+
 from logger import log_state
 from player import Player
 from asteroid import Asteroid
@@ -11,7 +13,11 @@ from particle import Particle
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    info = pygame.display.Info()
+
+    real_width = info.current_w
+    real_height = info.current_h
+    screen = pygame.display.set_mode((real_width, real_height))
     game_clock = pygame.time.Clock()
     
     updatable = pygame.sprite.Group()
@@ -28,12 +34,13 @@ def main():
     Particle.containers = (updatable, drawable)
 
     
-    player_1 = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    player_1 = Player(real_width / 2, real_height / 2)
     pygame.font.init()
     font = pygame.font.Font(None, 36)
     score = 0
     dt = 0
     
+
     while True:
         log_state()
         
@@ -66,9 +73,14 @@ def main():
         screen.fill("black")
         for object in drawable:
             object.draw(screen)
+        if player_1.lives < 1:
+            lives_text = font.render(f"Lives: {player_1.lives}", True, (255, 0, 0))
+        else:
+            lives_text = font.render(f"Lives: {player_1.lives}", True, (255, 255, 255))
         
         score_text = font.render(f"Score: {score}", True, (255, 255, 255))
         screen.blit(score_text, (10,10))
+        screen.blit(lives_text, (10, 40))
         pygame.display.flip()
         
         # limit the framerate to 60fps

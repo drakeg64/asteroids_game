@@ -64,3 +64,4 @@ class Player(CircleShape):
         self.position.x = SCREEN_WIDTH / 2
         self.position.y = SCREEN_HEIGHT / 2
         self.invulnerable_timer = 3
+        

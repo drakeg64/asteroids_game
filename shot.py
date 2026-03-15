@@ -8,7 +8,7 @@ class Shot(CircleShape):
         super().__init__(x, y, SHOT_RADIUS)
         color_green = pygame.Color(0, 255, 0)
         color_dark_green = pygame.Color(0, 100, 0)
-
+        self.shot_timer = 0.0
         mix_amount = random.random()
 
         self.color = color_green.lerp(color_dark_green, mix_amount)
@@ -18,5 +18,8 @@ class Shot(CircleShape):
 
     def update(self, dt):
         self.position += self.velocity * dt
+        self.shot_timer += dt
         self.wrap()
+        if self.shot_timer > 3.0:
+            self.kill()
         

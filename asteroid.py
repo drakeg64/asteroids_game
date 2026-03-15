@@ -11,6 +11,8 @@ class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
         self.points = []
+        self.rotation = 0
+        self.rotation_speed = random.uniform(-90, 90)
         num_points = 8
         for i in range(num_points):
             angle = (i / num_points) * (2 * math.pi)
@@ -22,12 +24,15 @@ class Asteroid(CircleShape):
     def draw(self, screen):
         actual_points = []
         for p in self.points:
+            p = p.rotate(self.rotation)
             actual_points.append(self.position + p)
         pygame.draw.polygon(screen, "white", actual_points, LINE_WIDTH)
+        
 
     def update(self, dt):
-        self.position += self.velocity * dt  
         self.wrap() 
+        self.rotation += self.rotation_speed * dt
+        self.position += self.velocity * dt  
 
     def split(self):
         self.kill()
