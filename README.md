@@ -49,10 +49,10 @@ python main.py
 
 ## Gameplay
 
-- **Controls**: Use arrow keys to rotate and move your spaceship
+- **Controls**: Use WASD keys to rotate and move your spaceship, F to use warpdrive
 - **Shooting**: Press spacebar to shoot asteroids
 - **Objective**: Destroy all asteroids without colliding with them
-- **Difficulty**: Asteroids break into smaller pieces when destroyed
+- **Difficulty**: Each progressing wave has an extra asteroid from the last. Asteroids break into smaller pieces when destroyed. Every five waves has a boss asteroid that gets bigger each boss wave.
 
 ## Game Mechanics
 
@@ -69,7 +69,7 @@ python main.py
 
 ### Collision Detection
 - Uses circular collision detection (implemented in `circleshape.py`)
-- Player loses if hit by an asteroid
+- Player loses a life if hit by an asteroid
 - Asteroids destroyed when hit by projectiles
 
 ## Configuration
@@ -77,7 +77,7 @@ python main.py
 Game constants can be modified in `constants.py`:
 - Screen dimensions
 - Player speed and rotation speed
-- Asteroid spawn rate and speed
+- Asteroid speed
 - Other gameplay parameters
 
 ## Development
@@ -97,7 +97,7 @@ Potential improvements for future versions:
 - Different difficulty levels
 - Power-ups and special weapons
 - Enemy ships
-- Particle effects
+- ~~Particle effects~~
 
 ## License
 
