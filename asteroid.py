@@ -10,6 +10,7 @@ import math
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
+        self.asteroid_count = 0
         self.points = []
         self.rotation = 0
         self.rotation_speed = random.uniform(-90, 90)
@@ -43,6 +44,7 @@ class Asteroid(CircleShape):
 
 
         if self.radius <= ASTEROID_MIN_RADIUS:
+            log_event("asteroid_destroyed")
             return
         
         log_event("asteroid_split")

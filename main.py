@@ -77,10 +77,12 @@ def main():
             lives_text = font.render(f"Lives: {player_1.lives}", True, (255, 0, 0))
         else:
             lives_text = font.render(f"Lives: {player_1.lives}", True, (255, 255, 255))
-        
+        wave_count = asteroid_field.wave_count
+        wave_text = font.render(f"Wave: {wave_count}", True, (255, 255, 255))
         score_text = font.render(f"Score: {score}", True, (255, 255, 255))
         screen.blit(score_text, (10,10))
         screen.blit(lives_text, (10, 40))
+        screen.blit(wave_text, (10, 70))
         pygame.display.flip()
         
         # limit the framerate to 60fps

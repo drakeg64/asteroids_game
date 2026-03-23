@@ -2,6 +2,7 @@ import pygame
 import random
 from asteroid import Asteroid
 from constants import *
+from logger import log_event
 
 
 class AsteroidField(pygame.sprite.Sprite):
@@ -30,22 +31,32 @@ class AsteroidField(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self, self.containers)
-        self.spawn_timer = 0.0
-
+        self.wave_count = 0
+        self.asteroid_count = 0
     def spawn(self, radius, position, velocity):
         asteroid = Asteroid(position.x, position.y, radius)
         asteroid.velocity = velocity
 
     def update(self, dt):
-        self.spawn_timer += dt
-        if self.spawn_timer > ASTEROID_SPAWN_RATE_SECONDS:
-            self.spawn_timer = 0
+        if len(Asteroid.containers[2]) < 1:
+            print("Spawning wave", self.wave_count)
+            self.wave_count += 1
+        
 
             # spawn a new asteroid at a random edge
-            edge = random.choice(self.edges)
-            speed = random.randint(40, 100)
-            velocity = edge[0] * speed
-            velocity = velocity.rotate(random.randint(-30, 30))
-            position = edge[1](random.uniform(0, 1))
-            kind = random.randint(1, ASTEROID_KINDS)
-            self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
+            for i in range(self.wave_count):
+                edge = random.choice(self.edges)
+                speed = random.randint(40, 100)
+                velocity = edge[0] * speed
+                velocity = velocity.rotate(random.randint(-30, 30))
+                position = edge[1](random.uniform(0, 1))
+                kind = random.randint(1, ASTEROID_KINDS)
+                self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
+                i += 1
+                
+        
+        
+           
+            
+
+        
