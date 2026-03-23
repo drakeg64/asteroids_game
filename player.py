@@ -1,4 +1,5 @@
 import pygame
+import random
 from constants import *
 from circleshape import CircleShape
 from shot import Shot 
@@ -11,7 +12,7 @@ class Player(CircleShape):
         self.shot_cooldown_timer = 0.0
         self.lives = 3
         self.invulnerable_timer = 0
-
+        self.warp_drive_timer = 0
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
@@ -28,6 +29,7 @@ class Player(CircleShape):
 
     def update(self, dt):
         self.shot_cooldown_timer -= dt
+        self.warp_drive_timer -= dt
         if self.invulnerable_timer > 0:   
             self.invulnerable_timer -= dt
         keys = pygame.key.get_pressed()
@@ -42,6 +44,12 @@ class Player(CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot(dt)
+        if keys[pygame.K_f]:
+            if self.warp_drive_timer <= 0:
+                self.warp_drive_timer = PLAYER_WARP_DRIVE_COOLDOWN_SECONDS
+                self.position.x = random.uniform(0, SCREEN_WIDTH) 
+                self.position.y = random.uniform(0, SCREEN_HEIGHT)
+            
         self.wrap()
 
     def rotate(self, dt):

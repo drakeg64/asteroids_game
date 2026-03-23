@@ -10,7 +10,6 @@ import math
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
-        self.asteroid_count = 0
         self.points = []
         self.rotation = 0
         self.rotation_speed = random.uniform(-90, 90)
@@ -22,6 +21,7 @@ class Asteroid(CircleShape):
                 math.cos(angle) * dist,
                 math.sin(angle) * dist
             ))
+        
     def draw(self, screen):
         actual_points = []
         for p in self.points:

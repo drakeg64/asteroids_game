@@ -41,7 +41,6 @@ class AsteroidField(pygame.sprite.Sprite):
         if len(Asteroid.containers[2]) < 1:
             print("Spawning wave", self.wave_count)
             self.wave_count += 1
-        
 
             # spawn a new asteroid at a random edge
             for i in range(self.wave_count):
@@ -53,6 +52,11 @@ class AsteroidField(pygame.sprite.Sprite):
                 kind = random.randint(1, ASTEROID_KINDS)
                 self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
                 i += 1
+                if self.wave_count % 5 == 0:
+                    log_event("boss_wave")
+               
+                    self.spawn((ASTEROID_MIN_RADIUS * kind) * (self.wave_count / 4), position, velocity)
+                    break
                 
         
         
