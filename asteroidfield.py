@@ -50,13 +50,13 @@ class AsteroidField(pygame.sprite.Sprite):
                 velocity = velocity.rotate(random.randint(-30, 30))
                 position = edge[1](random.uniform(0, 1))
                 kind = random.randint(1, ASTEROID_KINDS)
-                self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
                 i += 1
                 if self.wave_count % 5 == 0:
                     log_event("boss_wave")
                
-                    self.spawn((ASTEROID_MIN_RADIUS * kind) * (self.wave_count / 4), position, velocity)
+                    self.spawn((ASTEROID_MIN_RADIUS * kind) + ((self.wave_count / 5) * 25) + 25, position, velocity)
                     break
+                self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
                 
         
         

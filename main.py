@@ -33,7 +33,7 @@ def main():
     Shot.containers = (shots, updatable, drawable)
     Particle.containers = (updatable, drawable)
 
-    
+    bg = pygame.image.load("assets/background.jpg").convert()
     player_1 = Player(real_width / 2, real_height / 2)
     pygame.font.init()
     font = pygame.font.Font(None, 36)
@@ -66,11 +66,11 @@ def main():
             for shot in shots:
                 if asteroid.collides_with(shot):
                     log_event("asteroid_shot")
-                    score += 100
+                    score += (50 * wave_count)
                     asteroid.split()
                     shot.kill()
         
-        screen.fill("black")
+        screen.blit(bg, (-100, -100))
         for object in drawable:
             object.draw(screen)
         if player_1.lives < 1:
@@ -78,7 +78,11 @@ def main():
         else:
             lives_text = font.render(f"Lives: {player_1.lives}", True, (255, 255, 255))
         wave_count = asteroid_field.wave_count
-        wave_text = font.render(f"Wave: {wave_count}", True, (255, 255, 255))
+        if wave_count % 5 == 0 and wave_count != 0:
+            wave_text = font.render(f"BOSS INCOMING", True, (255, 0, 0))
+
+        else:
+            wave_text = font.render(f"Wave: {wave_count}", True, (255, 255, 255))
         score_text = font.render(f"Score: {score}", True, (255, 255, 255))
         screen.blit(score_text, (10,10))
         screen.blit(lives_text, (10, 40))

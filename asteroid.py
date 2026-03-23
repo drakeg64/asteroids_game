@@ -27,7 +27,10 @@ class Asteroid(CircleShape):
         for p in self.points:
             p = p.rotate(self.rotation)
             actual_points.append(self.position + p)
-        pygame.draw.polygon(screen, "white", actual_points, LINE_WIDTH)
+        if Asteroid.containers[2].sprites()[0].radius >= 61:
+            pygame.draw.polygon(screen, "red", actual_points, LINE_WIDTH)
+        else:
+            pygame.draw.polygon(screen, "white", actual_points, LINE_WIDTH)
         
 
     def update(self, dt):
